@@ -8,9 +8,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"
-            href="{{ route('product.index') }}">Product</a>
-        @guest
+          <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ route('product.index') }}">Product</a>
+          @guest
         <li class="nav-item">
           <a class="nav-link {{ Request::is('login*') ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
         </li>
@@ -20,8 +19,12 @@
         @endguest
         @auth
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('myOrders*') ? 'active' : '' }}" href="/myOrders">Pesanan
-            Saya</a>
+          <a class="nav-link {{ Request::is('cart*') ? 'active' : '' }}" href="/cart">Keranjang
+            <span class="top-0 start-100 translate-middle badge rounded-pill bg-info">
+              {{ \Cart::getContent()->count(); }}
+            </span>
+          </a>
+
         </li>
         @endauth
       </ul>

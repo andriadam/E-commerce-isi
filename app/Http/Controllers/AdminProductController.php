@@ -79,15 +79,12 @@ class AdminProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // die;
-        // return $id;
-        // $product = Product::find($id);
         // return $product;
         return view('admin.product.edit', [
-            'title' => 'Edit Produk',
+            'title' => 'Produk',
             'product' => $product,
-            'product_classes' => ProductClass::all(),
-            'product_groups' => ProductGroup::all()
+            'product_class' => ProductClass::all(),
+            'product_group' => ProductGroup::all()
         ]);
     }
 

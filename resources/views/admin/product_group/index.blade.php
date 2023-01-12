@@ -9,7 +9,7 @@
     @include('components.alert')
   </div>
   <div class="col-sm-12">
-    <a href="{{ route('admin.product.create') }}" class="btn btn-sm btn-primary"><i class="bi bi-plus-square"></i>
+    <a href="{{ route('admin.productGroup.create') }}" class="btn btn-sm btn-primary"><i class="bi bi-plus-square"></i>
       Tambah
       {{ $title }}</a>
   </div>

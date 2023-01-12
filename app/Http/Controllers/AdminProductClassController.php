@@ -29,7 +29,9 @@ class AdminProductClassController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.product_class.create', [
+            'title' => 'Produk',
+        ]);
     }
 
     /**
@@ -40,7 +42,14 @@ class AdminProductClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $validatedData = $request->validate([
+            'class_name' => 'required|max:40'
+        ]);
+        // simpan ke database
+        ProductClass::create($validatedData);
+
+        return redirect(route('admin.productClass.index'))->with('success', 'New Product Class has been added!');
     }
 
     /**
@@ -60,9 +69,12 @@ class AdminProductClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProductClass $productClass)
     {
-        //
+        return view('admin.product_class.edit', [
+            'title' => 'Kelas Produk',
+            'product_class' => $productClass,
+        ]);
     }
 
     /**
@@ -73,8 +85,16 @@ class AdminProductClassController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    { 
+        // Cek data request
+        $validatedData = $request->validate([
+            'class_name' => 'required|max:40'
+        ]);
+
+        // update ke database
+        ProductClass::where('id', $id)->update($validatedData);
+
+        return redirect(route('admin.productClass.index'))->with('success', 'New Product Class has been updated!');
     }
 
     /**

@@ -49,7 +49,7 @@
         <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
         <div class="col-sm-10">
           <textarea class="form-control @error('description') is-invalid @enderror" name="description"
-            required>{{ old('description', $product->description) }}</textarea>
+            required>{{ old('stock', $product->stock) }}</textarea>
           @error('description')
           <div class="invalid-feedback">
             {{ $message }}

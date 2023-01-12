@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminDiscountController;
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminProductClassController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminProductGroupController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [ProductController::class, 'index'])->name('product.index');
+Route::any('/', [ProductController::class, 'index'])->name('product.index');
 
 Route::middleware(['auth'])->group(function () {
     // dashboard
@@ -30,12 +33,23 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/', [ProductController::class, 'index'])->name('product.index')->route('welcome');
 
 
+    Route::get('cart', [CartController::class, 'cartList'])->name('user.cart.list');
+    Route::post('cart', [CartController::class, 'addToCart'])->name('user.cart.store');
+    Route::post('update-cart', [CartController::class, 'updateCart'])->name('user.cart.update');
+    Route::post('remove', [CartController::class, 'removeCart'])->name('user.cart.remove');
+    
+    Route::post('cart/useDiscount', [CartController::class, 'useDiscount'])->name('user.cart.useDiscount');
+    Route::post('storeOrderFromCart', [CartController::class, 'storeOrderFromCart'])->name('order.store');
 
     // admin dashboard
     Route::prefix('admin')->name('admin.')->middleware('ensureUserRole:admin')->group(function () {
-        Route::resource('/product', AdminProductController::class);
-        Route::resource('/productClass', AdminProductClassController::class);
-        Route::resource('/productGroup', AdminProductGroupController::class);
+        Route::resource('product', AdminProductController::class);
+        Route::resource('productClass', AdminProductClassController::class);
+        Route::resource('productGroup', AdminProductGroupController::class);
+
+        // admin discount
+        Route::resource('discount', AdminDiscountController::class);
+        Route::resource('order', AdminOrderController::class);
     });
 });
 

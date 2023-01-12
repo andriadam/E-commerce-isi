@@ -17,7 +17,7 @@ class AdminProductGroupController extends Controller
         $product_groups = ProductGroup::with('Product')->latest()->get();
         // return $product_groups;
         return view('admin.product_group.index', [
-            'title' => 'Produk',
+            'title' => 'Grup Produk',
             'product_groups' => $product_groups
         ]);
     }
@@ -29,7 +29,9 @@ class AdminProductGroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.product_group.create', [
+            'title' => 'Grup Produk',
+        ]);
     }
 
     /**
@@ -40,7 +42,14 @@ class AdminProductGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $validatedData = $request->validate([
+            'group_name' => 'required|max:40'
+        ]);
+        // simpan ke database
+        ProductGroup::create($validatedData);
+
+        return redirect(route('admin.productGroup.index'))->with('success', 'New Product Group has been added!');
     }
 
     /**
@@ -60,9 +69,12 @@ class AdminProductGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProductGroup $productGroup)
     {
-        //
+        return view('admin.product_group.edit', [
+            'title' => 'Grup Produk',
+            'product_group' => $productGroup,
+        ]);
     }
 
     /**
@@ -74,7 +86,16 @@ class AdminProductGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request;
+        // Cek data request
+        $validatedData = $request->validate([
+            'group_name' => 'required|max:40'
+        ]);
+
+        // update ke database
+        ProductGroup::where('id', $id)->update($validatedData);
+
+        return redirect(route('admin.productGroup.index'))->with('success', 'New Product Group has been updated!');
     }
 
     /**
