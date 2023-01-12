@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminProductClassController;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminProductGroupController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +24,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
+Route::middleware(['auth'])->group(function () {
+    // dashboard
+    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/', [ProductController::class, 'index'])->name('product.index')->route('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+
+    // admin dashboard
+    Route::prefix('admin')->name('admin.')->middleware('ensureUserRole:admin')->group(function () {
+        Route::resource('/product', AdminProductController::class);
+        Route::resource('/productClass', AdminProductClassController::class);
+        Route::resource('/productGroup', AdminProductGroupController::class);
+    });
+});
+
+require __DIR__ . '/auth.php';

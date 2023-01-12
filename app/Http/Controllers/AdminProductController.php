@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductClass;
+use App\Models\ProductGroup;
 use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
@@ -13,7 +16,12 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        return Product::latest()->get();
+        $products = Product::with('ProductClass', 'ProductGroup')->latest()->get();
+        // return $products;
+        return view('admin.product.index', [
+            'title' => 'Produk',
+            'products' => $products
+        ]);
     }
 
     /**
@@ -23,7 +31,10 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.product.create', [
+            'product_classes' => ProductClass::all(),
+            'product_groups' => ProductGroup::all()
+        ]);
     }
 
     /**
@@ -34,7 +45,19 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $validatedData = $request->validate([
+            'product_name' => 'required|max:40',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'description' => 'required|max:64',
+            'product_class_id' => 'required',
+            'product_group_id' => 'required',
+        ]);
+        // simpan ke database
+        Product::create($validatedData);
+
+        return redirect(route('admin.product.index'))->with('success', 'New Product has been added!');
     }
 
     /**
@@ -54,9 +77,18 @@ class AdminProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        // die;
+        // return $id;
+        // $product = Product::find($id);
+        // return $product;
+        return view('admin.product.edit', [
+            'title' => 'Edit Produk',
+            'product' => $product,
+            'product_classes' => ProductClass::all(),
+            'product_groups' => ProductGroup::all()
+        ]);
     }
 
     /**
@@ -68,7 +100,19 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $product;
+        $validatedData = $request->validate([
+            'product_name' => 'required|max:40',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric',
+            'description' => 'required|max:64',
+            'product_class_id' => 'required',
+            'product_group_id' => 'required',
+        ]);
+        // Update ke database
+        Product::where('id', $id)->update($validatedData);
+
+        return redirect(route('admin.product.index'))->with('success', 'Product has been updated!');
     }
 
     /**
@@ -79,6 +123,8 @@ class AdminProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Order::where('product_id', $product->id)->delete();
+        Product::destroy($id);
+        return redirect(route('admin.product.index'))->with('success', 'Product has been deleted!');
     }
 }

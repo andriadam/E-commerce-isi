@@ -16,17 +16,17 @@ class ProductGroupTableSeeder extends Seeder
     {
         $products_group = [
             [
-                'products_group_name' => 'group-a',
+                'group_name' => 'group-a',
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time())
             ],
             [
-                'products_group_name' => 'group-b',
+                'group_name' => 'group-b',
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time())
             ],
             [
-                'products_group_name' => 'group-c',
+                'group_name' => 'group-c',
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time())
             ],

@@ -14,8 +14,13 @@ class AddClassesIdAndGroupsIdOnProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->foreignId('class_id')->constrained('classes')->onDelete('set null');
-            $table->foreignId('group_id')->constrained('groups')->onDelete('set null');
+            $table->unsignedBigInteger('product_class_id');
+             $table->unsignedBigInteger('product_group_id');
+            $table->foreign('product_class_id')->references('id')->on('product_classes')->onDelete('cascade');
+            $table->foreign('product_group_id')->references('id')->on('product_groups')->onDelete('cascade');
+            //  $table->foreignId('products_class_id')->constrained('products_class')->onDelete('set null');
+            // $table->foreignId('products_group_id')->constrained('products_group')->onDelete('set null');
+        
         });
         
     }
@@ -28,8 +33,8 @@ class AddClassesIdAndGroupsIdOnProductsTable extends Migration
     public function down()
     {
         Schema::table('checkouts', function (Blueprint $table) {
-            $table->dropForeign('class_id_foreign');
-            $table->dropForeign('group_id_foreign');
+            $table->dropForeign('products_class_id_foreign');
+            $table->dropForeign('products_group_id_foreign');
         });
     }
 }

@@ -19,26 +19,24 @@
     <thead>
       <tr>
         <th>No. </th>
-        <th>Nama Produk</th>
-        <th>Harga</th>
-        <th>Stok</th>
-        <th>Kelas</th>
-        <th>Group</th>
+        <th>Nama Kelas</th>
+        <th>Produk</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      @forelse ($products as $row)
+      @forelse ($product_classes as $row)
       <tr>
         <td>{{ $loop->iteration }}</td>
-        <td>{{ $row->product_name }}</td>
-        <td>Rp. {{ number_format($row->price, 0, 0, '.') }}</td>
-        <td>{{ $row->stock }}</td>
-        <td>{{ $row->productClass->class_name }}</td>
-        <td>{{ $row->productGroup->group_name }}</td>
+        <td>{{ $row->class_name }}</td>
         <td>
-          <a href="{{ route('admin.product.edit', $row->id) }}" class="btn btn-success">Edit</a>
-          <form action="{{ route('admin.product.destroy', $row->id) }}" method="post" class="d-inline">
+          @foreach ($row->product as $row)
+              {{ $row->product_name }}
+          @endforeach
+        </td>
+        <td>
+          <a href="{{ route('admin.productClass.edit', $row->id) }}" class="btn btn-success">Edit</a>
+          <form action="{{ route('admin.productClass.destroy', $row->id) }}" method="post" class="d-inline">
             @method('delete')
             @csrf
             <button class="btn btn-danger border-0" onclick="return confirm('Are you sure?')">

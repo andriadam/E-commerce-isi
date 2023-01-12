@@ -16,17 +16,17 @@ class ProductClassTableSeeder extends Seeder
     {
         $products_class = [
             [
-                'products_class_name' => 'kelas-1',
+                'class_name' => 'kelas-1',
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time())
             ],
             [
-                'products_class_name' => 'kelas-2',
+                'class_name' => 'kelas-2',
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time())
             ],
             [
-                'products_class_name' => 'kelas-3',
+                'class_name' => 'kelas-3',
                 'created_at' => date('Y-m-d H:i:s', time()),
                 'updated_at' => date('Y-m-d H:i:s', time())
             ],

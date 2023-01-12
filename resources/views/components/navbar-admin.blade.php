@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="/">E-Commerce-ISI</a>
+    <a class="navbar-brand" href="/">PetShopQu</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,22 +8,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"
-            href="{{ route('product.index') }}">Product</a>
-        @guest
-        <li class="nav-item">
-          <a class="nav-link {{ Request::is('login*') ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
+          <a class="nav-link {{ Request::is('admin/*product') ? 'active' : '' }}" href="{{ route('admin.product.index') }}">Produk</a>
         </li>
+      </ul>
+      <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('register*') ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
+          <a class="nav-link {{ Request::is('admin/productClass*') ? 'active' : '' }}" href="{{ route('admin.productClass.index') }}">Kelas</a>
         </li>
-        @endguest
-        @auth
+      </ul>
+      <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('myOrders*') ? 'active' : '' }}" href="/myOrders">Pesanan
-            Saya</a>
+          <a class="nav-link {{ Request::is('admin/productGroup*') ? 'active' : '' }}" href="{{ route('admin.productGroup.index') }}">Group</a>
         </li>
-        @endauth
       </ul>
       @auth
       <form class="d-flex ms-auto" action="{{ route('logout') }}" method="post">
