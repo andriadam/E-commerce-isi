@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="row mt-4 text-center">
@@ -6,7 +6,15 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
-    @include('components.alert')
+    @if ($message = Session::get('successOrder'))
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Pesanan Berhasil dibuat</h4>
+    <p>Silahkan lakukan pembayaran sejumlah Rp. {{ number_format($message, 0, 0, '.') }} melalui BCA : 26532567326 A/n
+      Andri Adam</p>
+    <hr>
+    <p class="mb-0">Konfirmasi pembayaran melalui Api {{ URL::to('/api/paymentOrder'); }}</p>
+  </div>
+  @endif
   </div>
 </div>
 <div class="row mt-2">
@@ -34,18 +42,13 @@
         <td>{{ $row->bank_name }}</td>
         <td>{{ $row->transfer_date }}</td>
         <td>
-          <form action="{{ route('admin.order.updateStatus') }}" method="post">
-            @method('put')
-            @csrf
-            <input type="hidden" value="{{ $row->id }}" name="id">
-            <select name="statusPayment" id="" class="form-select" onchange="form.submit()">
-              <option {{ $row->statusPayment == 'Paid' ? "selected": "" }} value="Paid">Dibayar</option>
-              <option {{ $row->statusPayment == 'Waiting Confirmation' ? "selected": "" }} value="Waiting
-                Confirmation">Menunggu konfirmasi</option>
-              <option {{ $row->statusPayment == 'Waiting Payment' ? "selected": "" }}
-                value="Waiting Payment">Menunggu pembayaran</option>
-            </select>
-          </form>
+          <?php if ($row->statusPayment === "Paid") { ?>
+          <span class="badge bg-success">Dibayar</span>
+          <?php } elseif ($row->statusPayment === "Waiting Confirmation"){ ?>
+          <span class="badge bg-secondary">Menunggu konfirmasi</span>
+          <?php }else{ ?>
+          <span class="badge bg-secondary">Belum Dibayar</span>
+          <?php } ?>
         </td>
       </tr>
       @empty

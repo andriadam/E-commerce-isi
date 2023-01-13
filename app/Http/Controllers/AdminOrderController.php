@@ -87,4 +87,17 @@ class AdminOrderController extends Controller
     {
         //
     }
+
+    public function updateStatus(Request $request)
+    {
+        // Cek data request
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'statusPayment' => 'required',
+        ]);
+        // Update ke database
+        Order::where('id', $validatedData['id'])->update($validatedData);
+
+        return redirect(route('admin.order.index'))->with('success', 'Order has been updated!');
+    }
 }

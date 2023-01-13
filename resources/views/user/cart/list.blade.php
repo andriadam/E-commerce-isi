@@ -3,16 +3,6 @@
 @section('content')
 <div style="" class="text-center mt-5">
   <div class="row">
-    @if ($message = Session::get('successOrder'))
-    <div class="alert alert-success" role="alert">
-      <h4 class="alert-heading">Pesanan Berhasil dibuat</h4>
-      <p>Silahkan lakukan pembayaran sejumlah Rp. {{ number_format($message, 0, 0, '.') }} melalui BCA : 26532567326 A/n
-        Andri Adam</p>
-      <hr>
-      <p class="mb-0">Konfirmasi pembayaran melalui Nomor whatsapp<a
-          href="https://api.whatsapp.com/send?phone=6289602748612">0812921738</a></p>
-    </div>
-    @endif
     @include('components.alert')
   </div>
   <h1>Keranjang</h1>

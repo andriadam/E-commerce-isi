@@ -18,10 +18,11 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('discount_id')->nullable();
             $table->unsignedInteger('discount')->nullable();
-            $table->string('card_number', 20)->nullable();
-            $table->string('cvc', 3)->nullable();
+            $table->string('no_rek', 20)->nullable();
+            $table->string('bank_name', 20)->nullable();
+            $table->date('transfer_date')->nullable();
             $table->unsignedInteger('total')->default(0);
-            $table->boolean('is_paid')->default(false);
+            $table->string('statusPayment')->default('Waiting Payment');
             $table->timestamps();
             $table->softDeletes();
         });

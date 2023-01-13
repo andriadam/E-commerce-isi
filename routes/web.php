@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminProductGroupController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     
     Route::post('cart/useDiscount', [CartController::class, 'useDiscount'])->name('user.cart.useDiscount');
     Route::post('storeOrderFromCart', [CartController::class, 'storeOrderFromCart'])->name('order.store');
+    Route::get('orders', [OrderController::class, 'index'])->name('user.order.index');
 
     // admin dashboard
     Route::prefix('admin')->name('admin.')->middleware('ensureUserRole:admin')->group(function () {
@@ -49,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
         // admin discount
         Route::resource('discount', AdminDiscountController::class);
+        Route::put('updateStatus', [AdminOrderController::class, 'updateStatus'])->name('order.updateStatus');
         Route::resource('order', AdminOrderController::class);
     });
 });

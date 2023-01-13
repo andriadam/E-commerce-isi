@@ -19,7 +19,10 @@
         @endguest
         @auth
         <li class="nav-item">
-          <a class="nav-link {{ Request::is('cart*') ? 'active' : '' }}" href="/cart">Keranjang
+          <a class="nav-link {{ Request::is('orders*') ? 'active' : '' }}" href="{{ route('user.order.index') }}">Pesanan Saya</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('cart*') ? 'active' : '' }}" href="{{ route('user.cart.list') }}">Keranjang
             <span class="top-0 start-100 translate-middle badge rounded-pill bg-info">
               {{ \Cart::getContent()->count(); }}
             </span>

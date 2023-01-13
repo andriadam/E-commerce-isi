@@ -116,7 +116,7 @@ class CartController extends Controller
         // clear cart
         \Cart::clear();
 
-        return redirect()->route('user.cart.list');
+        return redirect()->route('user.order.index');
     }
 
     public function calculateDiscount($code)
